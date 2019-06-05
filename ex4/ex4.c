@@ -10,7 +10,32 @@
 
 int main(void)
 {
-    // Your code here    
+    pid_t pid = fork();
+
+    printf("pid is %d\n", pid);
+
+    if (pid == 0) {
+        printf("I'm the child\n");
+
+        // // execvp() system call
+        // char *myargs[2];
+        // myargs[0] = "ls";
+        // myargs[1] = NULL;
+        // // takes in the name of file being executed and the null terminated array
+        // execvp(myargs[0], myargs);
+
+
+        // execv() system call
+        char *myargs[2];
+        myargs[0] = "ls";
+        myargs[1] = NULL;
+        // takes in the path of the file to be executed and the null terminated array
+        execv("/bin/ls", myargs);
+
+    } else {
+        int wc = waitpid(pid, NULL, 0);
+        printf("Done with exec system call.\n");
+    } 
 
     return 0;
 }

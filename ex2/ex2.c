@@ -5,13 +5,28 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <string.h>
 
 int main(void)
 {
     FILE* fp;
-    fp = fopen("text.txt", w+);
+    fp = fopen("text.txt", "w+");
 
+    pid_t pid = fork();
+
+    printf("pid is %d\n", pid);
+
+    if (pid == 0) {
+        printf("I am the child\n");
+        char *child = "The child is writing this.\n";
+        fwrite(child, sizeof(char), strlen(child), fp);
+    } else {
+        printf("I am the parent\n");
+        char *parent = "The parent is writing this.\n";
+        fwrite(parent, sizeof(char), strlen(parent), fp);
+    }
+
+    fclose(fp);
     
-
     return 0;
 }
