@@ -8,7 +8,10 @@
 
 int main(void)
 {
-    // Your code here 
+    FILE* fp;
+    fp = fopen("text.txt", w+);
+
     
+
     return 0;
 }
